@@ -77,6 +77,33 @@ int main()
             break;
         }
 
+        // Collison Detection
+        // Collision Detect Snake with Border
+        if (snake.front().x < 0 || snake.front().x >= nScreenWidth)
+            bDead = true;
+        if (snake.front().y < 3 || snake.front().y >= nScreenHeight)   // 3 is the border of the scoreboard
+            bDead = true;
+
+
+        // Collision Detect Snake with Food
+        if (snake.front().x == nFoodX && snake.front().y == nFoodY)
+        {
+            nScore++;
+            while (screen[nFoodY * nScreenWidth + nFoodX] != L' ')  // Check if the spot is an empty space
+            {
+                nFoodX = rand() % nScreenWidth;
+                nFoodY = (rand() % (nScreenHeight - 3)) + 3;
+            }
+
+            for (int i = 0; i < 5; i++) // Duplicate tail by 5 segments
+                snake.push_back({ snake.back().x, snake.back().y });
+        }
+
+
+        // Collison Detect Snake V Snake
+        for (list<SSnakeSegment>::iterator i = snake.begin(); i != snake.end(); i++)
+            if (i != snake.begin() && i->x == snake.front().x && i->y == snake.front().y)   // These statements are evaluated in order (Awesome, C!)
+                bDead = true;
 
         // Chop off Snakes tail
         snake.pop_back();

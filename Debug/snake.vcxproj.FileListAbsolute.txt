@@ -1,2 +1,0 @@
-A:\snake\Debug\snake.exe
-A:\snake\Debug\snake.pdb
